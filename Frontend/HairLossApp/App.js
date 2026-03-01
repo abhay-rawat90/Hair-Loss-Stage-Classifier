@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, Image, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, ActivityIndicator, Alert, SafeAreaView, StatusBar } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-const API_URL = "http://192.168.137.1:8000/predict/";
+const API_URL = "https://hair-loss-stage-classifier.onrender.com/predict/";
 
 export default function App() {
   const [image, setImage] = useState(null);
@@ -12,14 +12,13 @@ export default function App() {
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
+      allowsEditing: false, 
       quality: 1,
     });
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
-      setResult(null); // Clear previous result
+      setResult(null); 
     }
   };
 
@@ -62,13 +61,15 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+      
       <Text style={styles.title}>Hair Loss Stage Classifier</Text>
-
+      
       <Button title="Pick an image from camera roll" onPress={pickImage} />
-
+      
       {image && <Image source={{ uri: image }} style={styles.image} />}
-
+      
       <View style={styles.buttonContainer}>
         <Button title="Analyze Image" onPress={uploadImage} disabled={!image || loading} />
       </View>
@@ -81,15 +82,43 @@ export default function App() {
           <Text style={styles.resultText}>Confidence: {result.confidence}</Text>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20 },
-  title: { fontSize: 20, fontWeight: 'bold', marginBottom: 20 },
-  image: { width: 224, height: 224, marginVertical: 20, borderRadius: 10 },
-  buttonContainer: { marginVertical: 10 },
-  resultContainer: { marginTop: 20, padding: 15, backgroundColor: '#f0f0f0', borderRadius: 10 },
-  resultText: { fontSize: 16, fontWeight: 'bold', marginVertical: 5 }
+  container: { 
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    padding: 20,
+    backgroundColor: '#ffffff' 
+  },
+  title: { 
+    fontSize: 20, 
+    fontWeight: 'bold', 
+    marginBottom: 20,
+    color: '#000000' 
+  },
+  image: { 
+    width: 224, 
+    height: 224, 
+    marginVertical: 20, 
+    borderRadius: 10 
+  },
+  buttonContainer: { 
+    marginVertical: 10 
+  },
+  resultContainer: { 
+    marginTop: 20, 
+    padding: 15, 
+    backgroundColor: '#f0f0f0', 
+    borderRadius: 10 
+  },
+  resultText: { 
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    marginVertical: 5,
+    color: '#000000' 
+  }
 });
