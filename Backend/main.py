@@ -6,7 +6,7 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 
-ONNX_PATH = "Backend\models\stage_classifier.onnx" 
+ONNX_PATH = "models/stage_classifier.onnx" 
 NUM_CLASSES = 7
 
 STAGE_LABELS = {
