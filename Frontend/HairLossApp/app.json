@@ -26,10 +26,16 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "assetBundlePatterns": [
+      "assets/**"
+    ],
     "extra": {
       "eas": {
         "projectId": "6ab220cc-a7c6-478a-88e8-08b2b6355eaa"
       }
-    }
+    },
+    "plugins": [
+      "expo-sharing"
+    ]
   }
 }
